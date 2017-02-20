@@ -18,7 +18,7 @@
       recurse: yes
       group: hw1
   - name: ensure nginx.conf is present
-    copy: src=/root/cse356_hw1/nginx.conf dest=/etc/nginx/nginx.conf
+    copy: remote_src=True src=/data/nginx.conf dest=/etc/nginx/nginx.conf
             owner=hw1 group=hw1 mode=664
   - name: ensure nginx is running
     service: name=nginx state=started
