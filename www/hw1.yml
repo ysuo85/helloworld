@@ -1,0 +1,24 @@
+---
+- hosts: hw1
+  tasks:
+  - name: ensure git is installed
+    apt: pkg=git state=present update_cache=yes
+  - name: ensure nginx is installed
+    apt: pkg=nginx state=present update_cache=yes
+  - name: ensure hw0 files are checked out from github at /data
+    git: repo=https://github.com/ysuo85/helloworld.git dest=/data
+  - name: ensure group hw1 is present
+    group: name=hw1 state=present
+  - name: ensure user hw1 is present
+    user: name=hw1 state=present group=hw1
+  - name: ensure nginx data directory has the right permissions
+    file:
+      path: /data
+      mode: u=rwX,g=rX,o=rX
+      recurse: yes
+      group: hw1
+  - name: ensure nginx.conf is present
+    copy: src=/root/cse356_hw1/nginx.conf dest=/etc/nginx/nginx.conf
+            owner=hw1 group=hw1 mode=664
+  - name: ensure nginx is running
+    service: name=nginx state=started
