@@ -22,3 +22,5 @@
             owner=hw1 group=hw1 mode=664
   - name: ensure nginx is running
     service: name=nginx state=started
+  - name: restart nginx
+    command: service nginx restart
